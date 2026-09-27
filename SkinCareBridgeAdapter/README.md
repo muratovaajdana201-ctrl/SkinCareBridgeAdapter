@@ -22,7 +22,6 @@ The treatment can be performed using:
 
 The main purpose of the project is to show how the Bridge pattern separates different parts of the system and how the Adapter pattern allows a new system to work with an old system that has a different interface.
 
----
 
 # Bridge Pattern
 
@@ -59,7 +58,6 @@ It can also work with `LegacySkinCareAdapter`.
 
 This makes the system easier to extend.
 
----
 
 # Adapter Pattern
 
@@ -99,7 +97,7 @@ and contains:
 
 The adapter receives a request from the new system and converts it into the format required by the legacy system.
 
----
+
 
 # How Adapter Works
 
@@ -135,7 +133,7 @@ The adapter converts this result into:
 
 The client only works with `TreatmentResult` and does not need to know about the legacy system.
 
----
+
 
 # Object Adapter
 
@@ -157,7 +155,7 @@ The structure is:
 
 The advantage of this approach is that the legacy class does not have to be changed.
 
----
+
 
 # Main Classes
 
@@ -173,7 +171,7 @@ The result is:
 
 `TreatmentResult`
 
----
+
 
 ## SkinCareSession
 
@@ -183,7 +181,7 @@ It contains a `TreatmentMethod`.
 
 The session uses the selected treatment method to perform the treatment.
 
----
+
 
 ## FacialCareSession
 
@@ -191,7 +189,7 @@ The session uses the selected treatment method to perform the treatment.
 
 It extends `SkinCareSession`.
 
----
+
 
 ## HydrationCareSession
 
@@ -199,7 +197,7 @@ It extends `SkinCareSession`.
 
 It also extends `SkinCareSession`.
 
----
+
 
 ## ManualCareMethod
 
@@ -207,7 +205,7 @@ It also extends `SkinCareSession`.
 
 It represents a treatment performed manually.
 
----
+
 
 ## DeviceCareMethod
 
@@ -215,7 +213,7 @@ It represents a treatment performed manually.
 
 It represents a treatment performed using a device.
 
----
+
 
 ## LegacySkinCareAdapter
 
@@ -229,7 +227,6 @@ Inside the adapter there is:
 
 The adapter translates the request from the new system to the format required by the legacy system.
 
----
 
 ## LegacySkinCareSystem
 
@@ -243,7 +240,7 @@ The legacy system is not changed.
 
 The Adapter is used to make it compatible with the new system.
 
----
+
 
 ## TreatmentRequest
 
@@ -255,7 +252,7 @@ It contains:
 - service code
 - duration in minutes
 
----
+
 
 ## TreatmentResult
 
@@ -266,7 +263,7 @@ It contains:
 - success status
 - result message
 
----
+
 
 ## LegacyResult
 
@@ -274,7 +271,7 @@ It contains:
 
 The adapter converts `LegacyResult` into `TreatmentResult`.
 
----
+
 
 ## TreatmentMethodSelector
 
@@ -296,7 +293,6 @@ For example:
 
 `LEGACY -> LegacySkinCareAdapter`
 
----
 
 ## TreatmentException
 
@@ -304,10 +300,11 @@ For example:
 
 For example, if the system receives an unsupported service code, an exception is thrown.
 
----
+
 
 # Project Structure
 
+```text
 . src
 . . main
 . . . java
@@ -342,8 +339,7 @@ For example, if the system receives an unsupported service code, an exception is
 . SkinCareSystem.puml
 . SkinCareSystem_UML.png
 . README.md
-
----
+```
 
 # How the System Works
 
@@ -427,7 +423,7 @@ Result:
 
 All tests passed successfully.
 
----
+
 
 # UML Diagram
 
@@ -458,7 +454,7 @@ The diagram includes:
 - `LegacyResult`
 - `TreatmentMethodSelector`
 
----
+
 
 # Why Bridge is Used
 
@@ -479,7 +475,7 @@ Without Bridge, many separate classes would be needed for every possible combina
 
 Bridge allows these parts to be changed independently.
 
----
+
 
 # Why Adapter is Used
 
@@ -499,7 +495,7 @@ Instead, `LegacySkinCareAdapter` translates between the two interfaces.
 
 This is the main reason for using Adapter in this project.
 
----
+
 
 # Advantages
 
@@ -511,7 +507,7 @@ The interface conversion is located in one class, which makes the code easier to
 
 The project also uses JUnit tests to check the main functionality.
 
----
+
 
 # Disadvantages
 
@@ -521,7 +517,7 @@ For a very small system, using Bridge and Adapter could make the code more compl
 
 However, in this project the patterns are useful because the system has different treatment types and also needs to work with an incompatible legacy system.
 
----
+
 
 # Maven
 
@@ -533,7 +529,6 @@ The main Maven configuration is stored in:
 
 The project uses Java 25.
 
----
 
 # How to Run
 
@@ -552,7 +547,7 @@ To run the tests:
 3. Select `Run All Tests`.
 4. Check that all 7 tests are passed.
 
----
+
 
 # Conclusion
 
