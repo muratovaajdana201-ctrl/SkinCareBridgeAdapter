@@ -1,0 +1,103 @@
+@startuml
+
+title Skin Care Treatment System - Bridge and Adapter Patterns
+
+interface TreatmentMethod {
+    +perform(request: TreatmentRequest): TreatmentResult
+}
+
+abstract class SkinCareSession {
+    -treatmentMethod: TreatmentMethod
+    #SkinCareSession(treatmentMethod: TreatmentMethod)
+    +conduct(request: TreatmentRequest): TreatmentResult
+}
+
+class FacialCareSession {
+    +FacialCareSession(treatmentMethod: TreatmentMethod)
+    +conduct(request: TreatmentRequest): TreatmentResult
+}
+
+class HydrationCareSession {
+    +HydrationCareSession(treatmentMethod: TreatmentMethod)
+    +conduct(request: TreatmentRequest): TreatmentResult
+}
+
+class ManualCareMethod {
+    +perform(request: TreatmentRequest): TreatmentResult
+}
+
+class DeviceCareMethod {
+    +perform(request: TreatmentRequest): TreatmentResult
+}
+
+class LegacySkinCareAdapter {
+    -legacySystem: LegacySkinCareSystem
+    +LegacySkinCareAdapter(legacySystem: LegacySkinCareSystem)
+    +perform(request: TreatmentRequest): TreatmentResult
+    -mapServiceCode(serviceCode: String): int
+}
+
+class LegacySkinCareSystem {
+    +execute(
+        clientReference: String,
+        procedureCode: int,
+        durationMinutes: int
+    ): LegacyResult
+}
+
+class TreatmentRequest {
+    -clientId: String
+    -serviceCode: String
+    -durationMinutes: int
+}
+
+class TreatmentResult {
+    -successful: boolean
+    -message: String
+}
+
+class LegacyResult {
+    -success: boolean
+    -details: String
+}
+
+enum TreatmentMethodType {
+    MANUAL
+    DEVICE
+    LEGACY
+}
+
+class TreatmentMethodSelector {
+    -legacySystem: LegacySkinCareSystem
+    +select(type: TreatmentMethodType): TreatmentMethod
+}
+
+class TreatmentException {
+}
+
+SkinCareSession <|-- FacialCareSession
+SkinCareSession <|-- HydrationCareSession
+
+SkinCareSession o-- TreatmentMethod
+
+TreatmentMethod <|.. ManualCareMethod
+TreatmentMethod <|.. DeviceCareMethod
+TreatmentMethod <|.. LegacySkinCareAdapter
+
+LegacySkinCareAdapter *-- LegacySkinCareSystem
+
+LegacySkinCareSystem --> LegacyResult
+
+TreatmentMethod --> TreatmentRequest
+TreatmentMethod --> TreatmentResult
+
+TreatmentMethodSelector --> TreatmentMethod
+TreatmentMethodSelector --> TreatmentMethodType
+TreatmentMethodSelector --> LegacySkinCareSystem
+
+LegacySkinCareAdapter ..> TreatmentRequest
+LegacySkinCareAdapter ..> TreatmentResult
+LegacySkinCareAdapter ..> LegacyResult
+LegacySkinCareAdapter ..> TreatmentException
+
+@enduml
